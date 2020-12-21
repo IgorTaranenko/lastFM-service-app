@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 
 const API_KEY = "bc68ff8a6f3e8c34ff947136b3b882ac";
-const API_GET_URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${API_KEY}&format=json`;
+const API_GET_URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&format=json`;
 
 export interface Tracks {
     tracks: {
@@ -57,9 +56,9 @@ export class APIService {
         let API_URL: string = "";
         
         if (artistName) {
-            API_URL = `http://ws.audioscrobbler.com/2.0/?method=track.search&artist=${artistName}&track=${trackName}&api_key=${API_KEY}&format=json`;
+            API_URL = `http://ws.audioscrobbler.com/2.0/?method=track.search&artist=${artistName}&track=${trackName}&format=json`;
         } else {
-            API_URL = `http://ws.audioscrobbler.com/2.0/?method=track.search&track=${trackName}&api_key=${API_KEY}&format=json`;
+            API_URL = `http://ws.audioscrobbler.com/2.0/?method=track.search&track=${trackName}&format=json`;
         }
         return this.http.get<SearchedTracks>(API_URL)
             .pipe(
