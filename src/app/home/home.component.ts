@@ -1,11 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-const API_KEY = "bc68ff8a6f3e8c34ff947136b3b882ac";
-const API_GET_URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${API_KEY}&format=json`;
-
-export interface Tracks {
-    tracks: Object
-}
+import { APIService, Track, Tracks } from '../api.service';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -14,22 +8,15 @@ export interface Tracks {
 
 export class HomeComponent implements OnInit {
 
-    constructor(private http: HttpClient) { }
+    constructor(private _apiService: APIService) { }
     tracks;
     isLoading: boolean = false;
 
     ngOnInit(): void {
-        this.http.get<Tracks>(API_GET_URL).subscribe(data => {
-            setTimeout(() => {
-                this.tracks = data;
-                this.tracks = this.tracks.tracks.track;
-                let count = 0;
-                for (let i of this.tracks) {
-                    i.imageLink = i.image[0]["#text"];
-                }
-                console.log(this.tracks);
-            }, 1000);
-        });
+        this._apiService.getTracks().subscribe(data => {
+            console.log(data);
+            this.tracks = data;
+        })
     }
 
 }
